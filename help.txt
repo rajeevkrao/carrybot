@@ -1,0 +1,17 @@
+Commands:
+!myid 
+To know your Unique ID
+
+!jd
+To know when you joined this server
+
+!botservers
+To know which all servers this bot has joined
+
+
+Website:
+https://carrybot.glitch.me
+
+
+Add this bot to your server:
+Type !addbot in the servers which carrybot is available

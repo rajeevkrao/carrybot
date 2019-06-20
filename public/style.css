@@ -1,0 +1,144 @@
+/* styles */
+/* called by your view template */
+ 
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  margin: 2em;
+  background-color: purple;
+  background-size: cover; /* or contain depending on what you want */
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.container {
+background-image:url("https://cdn.glitch.com/172511f7-a318-4755-8ed9-b24b68d81179%2F4393.jpg?1535990873004");
+background-size: cover; /* or contain depending on what you want */
+background-position: center center;
+background-repeat: no-repeat;
+margin:auto;
+padding:0;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: auto;
+}
+
+main{
+  background-image:url("https://cdn.glitch.com/172511f7-a318-4755-8ed9-b24b68d81179%2Fbackground-cement-concrete-242236.jpg?1536593744631");
+  background-size: cover;
+}
+
+h1 {
+  font-style: oblique;
+  color: #000000;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+p{
+  text-align:center;
+}
+
+p.heading{
+  font-family: 'Aldrich';font-size: 22px;
+  font-size:50px;
+  text-align:center;
+  text-shadow: 3px 0 0 #fff, -3px 0 0 #fff, 0 3px 0 #fff, 0 -3px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
+}
+
+input {
+  display: block;
+  margin-bottom: 10px;
+  padding: 5px;
+  width: 100%;
+  border: 1px solid lightgrey;
+  border-radius: 3px;
+  font-size: 16px;
+}
+
+button {
+  font-size: 16px;
+  border-radius: 3px;
+  background-color: lightgrey;
+  border: 1px solid grey;
+  box-shadow: 2px 2px teal;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: cyan;
+}
+
+button:active {
+  box-shadow: none;
+}
+
+li {
+  margin-bottom: 5px;
+  text-align:center;
+}
+
+header {
+    padding-top: 25px;
+    padding-bottom: 25px;
+    color: black;
+    background-image:url("https://cdn.glitch.com/172511f7-a318-4755-8ed9-b24b68d81179%2Fheading%20art.png?1536588811241");
+    background-size: cover; /*cover or contain depending on what you want */
+    background-position: center center;
+    background-repeat: no-repeat;
+    text-align:center;
+    margin-bottom: 10px;
+}
+
+footer {
+  margin-top: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-top: 1px solid lightgrey;
+  background-image:url("data:image/jpeg;base64,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");
+  background-size: cover; /*cover or contain depending on what you want */
+  background-position: center center;
+  background-repeat: no-repeat;
+  text-align:center;
+}
+/* styles */
+/* called by your view template */
+
+* {
+  box-sizing: border-box;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+form {
+  margin-bottom: 25px;
+  padding: 15px;
+  background-color: lightgreen;
+  display: inline-block;
+  width: 100%;
+  max-width: 340px;
+  border-radius: 3px;
+}
+
+ol{
+    text-align:center;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    margin: 2em;
+}
+
+il{
+    text-align:center;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+}
+

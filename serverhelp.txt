@@ -1,0 +1,7 @@
+List of all server commmands
+
+!server register
+To register this server in our database
+
+!server unregister
+To remove your server from our databse
