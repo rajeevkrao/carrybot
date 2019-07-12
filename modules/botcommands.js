@@ -32,11 +32,11 @@ module.exports = (message, client) => {
         if(!gset[guild.id])
           gset[guild.id]={};
           fs.writeFile(gsetfile, JSON.stringify(gset), (err) => console.error);
-          message.channel.send("Info updated");
+          message.channel.send("Info of "+ guild.name +" has been updated");
       })
       
   }
-  
+  /*
   if(message.content.startsWith(config.prefix + "sms"))//SaveMyScore
   {
       if(!gset[message.guild.id])
@@ -50,5 +50,5 @@ module.exports = (message, client) => {
       
       gset[message.guild.id].users[message.author.id].score = 10;
       fs.writeFile(gsetfile, JSON.stringify(gset), (err) => console.error);    
-  }
+  }*/
 };

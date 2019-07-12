@@ -1,1 +1,10 @@
-users.json
+/keys
+/public/css
+/public/js
+/public/vendor
+/public/img
+/public/mail
+/public/scss
+instagram.js
+public/images
+gmail.js

@@ -1,100 +1,273 @@
-<!-- This is a static file -->
-<!-- served from your routes in server.js -->
-
-<!-- You might want to try something fancier: -->
-<!-- html/nunjucks docs: https://mozilla.github.io/nunjucks/ -->
-<!-- pug: https://pugjs.org/ -->
-<!-- haml: http://haml.info/ -->
-<!-- hbs(handlebars): http://handlebarsjs.com/ -->
-
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en-US">
   <head>
-    <title>Carrybot!</title>
-    <meta name="description" content="bot dedicated for Carrybhai">
-    <meta name="google-site-verification" content="axCtelNoDLi9N32HBeGHbt4jt4GeUU10loUQtOurvvg" />
-    <meta name="propeller" content="ec47759b86c653e6b5c97fe51171a367">
-    <link id="favicon" rel="icon" href="https://cdn.glitch.com/172511f7-a318-4755-8ed9-b24b68d81179%2Fcarrminati%20alpha%20channel..png?1535981328481" type="image/x-icon">
+    <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({
-          google_ad_client: "ca-pub-9896213837637484",
-          enable_page_level_ads: true
-     });
-</script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+    
+    <link id="favicon" rel="icon" href="https://cdn.glitch.com/172511f7-a318-4755-8ed9-b24b68d81179%2Fcarrminati%20alpha%20channel..png?1535981328481" type="image/x-icon">
 
-    <!-- import the webpage's stylesheet -->
-    <link rel="stylesheet" href="/style.css">
-    
-    <!-- import the webpage's client-side javascript file -->
-    <script src="/client.js" defer></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+
+    <!-- Custom Css -->
+    <link rel="stylesheet" href="/style.css" type="text/css" />
+
+    <!-- Ionic icons -->
+    <link href="https://unpkg.com/ionicons@4.2.0/dist/css/ionicons.min.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet">
+
+    <title>Carrybot</title>
   </head>
-  
-  
-  <body>
-    
-    <header>
-      <p class="heading">
-      CARRYBOT
-      </p>
-    </header>
 
-    <main>
-      <p class="bold">Toh Kaise hain aap log!!!</p>
-      
-      <img src="https://cdn.glitch.com/172511f7-a318-4755-8ed9-b24b68d81179%2Fcarryminati_2.jpg?1535982804107" class="center" alt="Carryminati">
-      
-      <p>Apka naam likiye</p>
-      
-      <div align="center">
-        <form align="center">
-          <input name="dream" type="text" maxlength="100" placeholder="NAAM!" aria-labelledby="submit-dream">
-          <button type="submit" id="Bhejo">Send</button>
-        </form>
+  <body>
+
+  <!-- N A V B A R -->
+  <nav class="navbar navbar-default navbar-expand-lg fixed-top custom-navbar">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="icon ion-md-menu"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <div class="container">
+      	<img style="width:50px; height:50px;" src="https://cdn.glitch.com/172511f7-a318-4755-8ed9-b24b68d81179%2Fcarrminati%20alpha%20channel..png?1535981328481" class="img-fluid nav-logo-desktop" alt="Company Logo">
+        <ul class="navbar-nav ml-auto nav-right" data-easing="easeInOutExpo" data-speed="1250" data-offset="65">
+          <li class="nav-item nav-custom-link">
+            <a class="nav-link" href="#hero">Home<i class="icon ion-ios-arrow-forward icon-mobile"></i></a>
+          </li>
+          <li class="nav-item nav-custom-link">
+            <a class="nav-link" href="#testimonials">Latest Videos<i class="icon ion-ios-arrow-forward icon-mobile"></i></a>
+          </li>
+          <li class="nav-item nav-custom-link">
+            <a class="nav-link" href="https://discordapp.com/oauth2/authorize?client_id=394043043931619328&permissions=8&scope=bot">Discord bot<i class="icon ion-ios-arrow-forward icon-mobile"></i></a>
+          </li>
+          <li class="nav-item nav-custom-link">
+            <a class="nav-link" href="https://discord.gg/skdAzYn">Discord Server<i class="icon ion-ios-arrow-forward icon-mobile"></i></a>
+          </li>
+        </ul>
       </div>
-      
-      <p class ="bold">
-        Members of HOMO-BAKCHODIAN Society!
-      </p>
-      
-      <section class="dreams">
-        <il id="dreams"></il>
-      </section>
-      
-      <p class="bold">Links</p>
-      <p>
-        <a href="https://carrybot.glitch.me/about">About us!!</a><br>
-        <a href="https://carrybot.glitch.me/dil">Join Carryminati FC Discord Server</a><br>
-        <a href="https://carrybot.glitch.me/discordbotinvite">Invite this bot to your Discord Server</a><br>
-      </p>
-      
-      <script src="https://apis.google.com/js/platform.js"></script>
-      
-      <div align="center">
-      <div class="g-ytsubscribe" data-channelid="UC0IWRLai-BAwci_e9MylNGw" data-layout="full" data-count="default" ></div>
-      <div class="g-ytsubscribe" data-channelid="UC51OKFGqiMGco1QjZQI6gOg" data-layout="full" data-count="default" ></div>
-      <div class="g-ytsubscribe" data-channelid="UCj22tfcQrWG7EMEKS0qLeEg" data-layout="full" data-count="default" ></div>   
+    </div>
+  </nav>
+  <!-- E N D  N A V B A R -->
+  
+  <!-- H E A D I N G -->
+  <section id="hero">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 imagefit" >
+          <img src="images/iphone.png" class="img-fluid" alt="Demo image">
+        </div>
+        <div class="col-md-7 content-box hero-content">
+          <span>Carryminati</span>
+          <h1><b>A great youtuber</b></h1>
+          <p>Who runs two channels</p>
+          <a href="https://www.youtube.com/AddictedA1" class="btn btn-regular">Carryminati</a>
+          <a href="https://www.youtube.com/carryislive" class="btn btn-regular">Carryislive</a>
+        </div>
       </div>
-      
-      <script type="text/javascript">
-      var adfly_id = 16590433;
-      var adfly_advert = 'banner';
-      var adfly_protocol = 'http';
-      var adfly_domain = 'adf.ly';
-      var domains = ['depositfiles.com','rapidshare.com','vip-file.com'];
-      </script>
-      <script src="https://cdn.adf.ly/js/link-converter.js"></script>
-    </main>
+    </div>
+  </section>
+  <!-- E N D  H E A D I N G-->
+
+  <!-- M A R K E T I N G 
+  <section id="marketing">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-5">
+          <div class="content-box">
+            <span>Organic Search Report</span>
+            <h2>Search Insights</h2>
+            <p>Grow your search traffic, research your competitors keywords and monitor your ranking in real time.</p>
+            <a href="#" class="btn btn-regular">Start Free Trial</a>
+          </div>
+        </div>
+        <div class="col-md-7">
+            <img src="images/demo-image.png" class="img-fluid" alt="Demo image">
+        </div>
+      </div>
+    </div>
+  </section>
+  E N D  M A R K E T I N G -->
+
+  <!-- T E S T I M O N I A L S -->
+  <section id="testimonials">
+    <div class="container">
+      <div class="title-block">
+        <h2>Latest Videos</h2>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="testimonial-box">
+            <h6 text-align="center">
+              YouTube - Carryminati
+            </h6>
+            <script type="text/javascript">
+        var channelID = "UCj22tfcQrWG7EMEKS0qLeEg";
+var reqURL = "https://www.youtube.com/feeds/videos.xml?channel_id=";
+$.getJSON("https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(reqURL)+channelID, function(data) {
+   var link = data.items[0].link;
+   var id = link.substr(link.indexOf("=")+1);
+$("#youtube_video").attr("src","https://youtube.com/embed/"+id + "?controls=0&showinfo=0&rel=0");
+});
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<iframe class="youtube" id="youtube_video" frameborder="0" allowfullscreen></iframe>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="testimonial-box">
+            <h6 text-align="center">
+              YouTube - Carryislive
+            </h6>
+            <script type="text/javascript">
+        var channelID = "UC0IWRLai-BAwci_e9MylNGw";
+var reqURL = "https://www.youtube.com/feeds/videos.xml?channel_id=";
+$.getJSON("https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(reqURL)+channelID, function(data) {
+   var link = data.items[0].link;
+   var id = link.substr(link.indexOf("=")+1);
+$("#youtube_video1").attr("src","https://youtube.com/embed/"+id + "?controls=0&showinfo=0&rel=0");
+});
+    </script>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<iframe class="youtube" id="youtube_video1" frameborder="0" allowfullscreen></iframe>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- E N D  T E S T I M O N I A L S -->
+
+  <!-- P R I C I N G
+  <section id="pricing">
+    <div class="container">
+      <div class="title-block">
+        <h2>Plans and Pricing</h2>
+        <p>The best software to develop perfect content and advertising strategies to increase leads and sales.</p>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="pricing-box">
+            <h3 class="demo">Demo Version</h3>
+            <h6>Free</h6>
+            <small>forever</small>
+            <p>Demo gives you full access to all features for 7 days</p>
+            <div class="divider-light"></div>
+            <ul>
+              <li><i class="icon ion-md-checkmark-circle-outline demo"></i>Marketing plan</li>
+              <li><i class="icon ion-md-checkmark-circle-outline demo"></i>Seo reporting tool</li>
+              <li><i class="icon ion-md-checkmark-circle-outline demo"></i>Keywords explorer</li>
+              <li><i class="icon ion-md-checkmark-circle-outline demo"></i>Competitive analysis</li>
+              <li><i class="icon ion-md-checkmark-circle-outline demo"></i>Five projects - <span class="demo">¡New!</span></li>
+            </ul>
+            <div class="text-center">
+              <a href="#" class="btn btn-demo">Demo version</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="pricing-box">
+            <h3>Standard Version</h3>
+            <h6>$9</h6>
+            <small>per month</small>
+            <p>Outrank your competitors with this amazing software</p>
+            <div class="divider-light"></div>
+            <ul>
+              <li><i class="icon ion-md-checkmark-circle-outline"></i>Marketing plan</li>
+              <li><i class="icon ion-md-checkmark-circle-outline"></i>Seo reporting tool</li>
+              <li><i class="icon ion-md-checkmark-circle-outline"></i>Keywords explorer</li>
+              <li><i class="icon ion-md-checkmark-circle-outline"></i>Competitive analysis</li>
+              <li><i class="icon ion-md-checkmark-circle-outline"></i>Unlimited projects - <span>¡New!</span></li>
+            </ul>
+            <div class="text-center">
+              <a href="#" class="btn btn-buy">Buy now</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="pricing-box">
+            <h3>Agency Version</h3>
+            <h6>$29</h6>
+            <small>per month</small>
+            <p>For agencies and businesses with extensive web presence</p>
+            <div class="divider-light"></div>
+            <ul>
+              <li><i class="icon ion-md-checkmark-circle-outline"></i>Marketing plan</li>
+              <li><i class="icon ion-md-checkmark-circle-outline"></i>Seo reporting tool</li>
+              <li><i class="icon ion-md-checkmark-circle-outline"></i>Keywords explorer</li>
+              <li><i class="icon ion-md-checkmark-circle-outline"></i>Competitive analysis</li>
+              <li><i class="icon ion-md-checkmark-circle-outline"></i>Unlimited projects - <span>¡New!</span></li>
+            </ul>
+            <div class="text-center">
+              <a href="#" class="btn btn-buy">Buy now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  E N D  P R I C I N G -->
+
+  <!-- C A L L  T O  A C T I O N -->
+  <section id="call-to-action">
+    <div class="container text-center">
+
+      <div class="title-block">
+              <h2>For Carryminati fans</h2>
+        <p>If you are a carryminati fan why not join our fan club.</p>
+        <a href="https://discord.gg/skdAzYn" class="btn btn-regular">Join now!!</a>
+      </div>
+    </div>
+  </section>
+  <!-- E N D  C A L L  T O  A C T I O N -->
+
+  <!--  F O O T E R  -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          <h5>Blog</h5>
+          
+          <!--
+          <ul>
+            <li><a href="#">Get High Quality Backlinks</a></li>
+            <li><a href="#">Top Google Searches</a></li>
+            <li><a href="#">Avoid Google Penalties</a></li>
+            <li><a href="#">White Hat SEO Tips</a></li>
+            <li><a href="#">Google Trends</a></li>
+          </ul>
+          -->
+        </div>
+        <div class="col-md-3">
+          <h5>About</h5>
+          <p>This page is creaed in favour of carryminati and his fans.</p>
+          <p>Contact-<a href="yt.ratech@gmail.com" class="external-links">yt.ratech@gmail.com</a></p>
+        </div>
+      </div> 
+      <div class="divider"></div>
+      <div class="row">
+        <div class="col-md-6 col-xs-12">
+            <a href="https://www.facebook.com/raokrajeev"><i class="icon ion-logo-facebook"></i></a>
+            <a href="https://www.instagram.com/carrybot"><i class="icon ion-logo-instagram"></i></a>
+            <a href="https://www.twitter.com/rajeevraok"><i class="icon ion-logo-twitter"></i></a>
+            <a href="https://www.youtube.com/arrebhai"><i class="icon ion-logo-youtube"></i></a>
+          </div>
+          <div class="col-md-6 col-xs-12">
+            <small>2019 &copy; All rights reserved. Made by <a href="http://about.me/rajeevkrao" target="blank" class="external-links">Rajeev K Rao</a></small>
+          </div>
+      </div>
+    </div>
+  </footer>
+  <!--  E N D  F O O T E R  -->
     
-    <footer>
-    Come Back Again soon!!
-    </footer>
-      
-    
-    
+
+    <!-- External JavaScripts -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
   </body>
 </html>

@@ -26,8 +26,11 @@ const sercup = require("./modules/servercount.js");
 const rep = require("./reply.json");
 const config = require("./config.json");
 
+var pcsetfile = "./point.json";
+const pcset = require(pcsetfile);
+
 var gsetfile = "./guilds.json";
-const gset = require(gsetfile);
+const gset= require(gsetfile);
 
 const usrdb = "./users.json";
 const usr = require(usrdb);
@@ -85,7 +88,7 @@ client.on("message", (message) => {
 });
 
 //commands
-client.on("message", (message) => { 
+client.on('message', (message) => {
   if(message.guild === null)
   { 
     return 1;
@@ -172,4 +175,8 @@ app.get('/test', function(request, response) {
 
 app.get('/test2', function(request, response) {
   response.sendFile(__dirname + '/views/test2.html');
+});
+
+app.get('/pointreq', function(request, response) {
+  response.json(pcset);
 });
