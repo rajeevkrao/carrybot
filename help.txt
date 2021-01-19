@@ -1,5 +1,5 @@
-Commands:
-!myid 
+**Commands:**```
+!myid
 To know your Unique ID
 
 !jd
@@ -8,10 +8,19 @@ To know when you joined this server
 !botservers
 To know which all servers this bot has joined
 
+!points
+To check your points with this bot
 
-Website:
+!leaderboard
+Check who is leading with highest points
+```
+
+**Website:**
 https://carrybot.glitch.me
 
 
-Add this bot to your server:
+**Add this bot to your server:**```
 Type !addbot in the servers which carrybot is available
+```
+
+Delete this message by clicking the X mark below

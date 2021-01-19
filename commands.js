@@ -4,15 +4,16 @@ const https = require('https');
 
 //const youtube = require("./modules/youtube.js");
 
-const { RichEmbed } = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 
 const config = require("./config.json");
 const dscmds = require("./DSCMDS.js");
 
 const gdbfix = require("./gdbfix.js");
 const usrcmds = require("./users.js");
+const bsbots = require("./modules/botselling.js");
 const guildscmds = require("./modules/botcommands.js");
-const msglog = require("./modules/msglogger.js");
+//const msglog = require("./modules/msglogger.js");
 
 var express = require('express');
 var app = express();
@@ -32,32 +33,40 @@ module.exports =(message, client) => {
   const args = message.content.slice(config.prefix.length).split(' ');
   const command = args.shift().toLowerCase();
   
+  bsbots(message, client, args);
   usrcmds(message, client, args);
   guildscmds(message, client);
-  msglog(message, client);
+  //msglog(message, client);
 
 //-----------------------------member commands---------------------------------------------
   
   if(message.content.startsWith(config.prefix + "helpme"))
   {
-    message.delete(1000);
+    message.delete({timeout:1000});
     fs.readFile('help.txt', 'utf8',(err, data) => {
     if (err) throw err;
-    var embed = new RichEmbed().setTitle("Commands for Carrybot").setColor(0x00FF00).setDescription(data);
-    message.author.send(embed);
+    var embed = new MessageEmbed().setTitle("Commands for Carrybot").setColor(0x00FF00).setDescription(data);
+    message.channel.send(embed).then(message=>message.react("❌"));
     });
   }
   
   if(message.content.startsWith(config.prefix + "myid"))
   {
-    message.delete(1000);
+    message.delete({timeout:1000});
     var tag = "<@" + message.author.id + ">";
     message.author.send(tag +" your Discord ID is : " + message.author.id);
   }
   
   if(message.content.startsWith(config.prefix + "addbot"))
   {
-    client.generateInvite(8).then(link => message.channel.send(link))
+    message.delete({timeout:1000});
+    //client.generateInvite(8).then(link => message.channel.send(link)) //without async and await
+    async function invite(){
+    var link = await client.generateInvite(8);
+    var msg = await message.channel.send(link);
+    msg.delete({timeout:10000});
+    }
+    invite();
   };
   
   if(message.content.startsWith(config.prefix + "botservers"))
@@ -68,76 +77,96 @@ module.exports =(message, client) => {
       string+= i + '. ' + guild.name + '\n';
       i++;
       })
-      var embed = new RichEmbed().setTitle("Servers which **" + client.user.username + "** has joined").setColor(0x0000FF).setDescription(string);
+      var embed = new MessageEmbed().setTitle("Servers which **" + client.user.username + "** has joined").setColor(0x0000FF).setDescription(string);
       message.channel.send(embed);
   };
   
   if(message.content.startsWith(config.prefix + "jd"))
   {
-    message.delete(1000);
+    message.delete({timeout:1000});
     message.author.send("You joined **" + message.guild.name + "** at " + message.member.joinedAt); 
   };
   
-  if(message.content.startsWith(config.prefix + "pubgroom"))
+  if(message.content.startsWith(config.prefix + "f"))
   {
-    /*
-    async function getFirstUser() {
-    let users = await getUsers();
-    return users[0].name;
-    */
-    async function getFirstUser() {
-    var bar = client.fetchUser("366565330719473667").then(user => {
-      return user.username;
-        })
-    return bar;
-    }  
-    console.log(getFirstUser());
-  }    
+    message.delete({timeout:1000});
+    message.channel.send("Press F to pay respects").then(message=>message.react("🇫"))
+  };
+  
+  if(message.content.startsWith(config.prefix + "idname"))
+  {
+    var user = client.users.cache.get(args[0]);
+    if(user==undefined)
+      message.channel.send("User not available");
+    else
+      message.channel.send(user.username);
+  }  
+  
+  if(message.content.startsWith(config.prefix + "sinfo")){
+    message.channel.send(message.guild.members.cache.size);
+  }
   
   if(message.content.startsWith(config.prefix + "leaderboard"))
   {
-    
-    const list = client.guilds.get(message.guild.id);
-    var a = [];
-    list.members.forEach(member => {
-      if(!uset[member.user.id])
-        uset[member.user.id]={}
-      if(!uset[member.user.id][message.guild.id])
-        uset[member.user.id][message.guild.id]={}
-      if(!uset[member.user.id][message.guild.id].points)
-        uset[member.user.id][message.guild.id].points=0;
-      fs.writeFile(usetfile, JSON.stringify(uset), (err) => console.error);
+    var msg2=message.channel.send("Calculating Total members...").then(msg => {
+      const list = client.guilds.cache.get(message.guild.id);
+      var a = [];
+      list.members.cache.forEach(member => {
+        if(!uset[member.user.id])
+          uset[member.user.id]={}
+        if(!uset[member.user.id][message.guild.id])
+          uset[member.user.id][message.guild.id]={}
+        if(!uset[member.user.id][message.guild.id].points)
+          uset[member.user.id][message.guild.id].points=0;
+        fs.writeFileSync(usetfile, JSON.stringify(uset), (err) => console.error);
+        for(var i=0;i<10;i++)
+        {
+          var user=a[i];
+          if(a[i]==null)
+          {
+            a[i]=member.user.id;
+            break;
+          }
+          else if(uset[member.user.id][message.guild.id].points>uset[a[i]][message.guild.id].points)
+          {
+            for(var j=10;j>i;j--)
+            {
+              a[j]=a[j-1];
+            }
+            a[i]=member.user.id;
+            break;
+          }
+        }
+      });
+      var lb1="";
       for(var i=0;i<10;i++)
       {
-        var user=a[i];
-        if(a[i]==null)
-        {
-          a[i]=member.user.id;
+        if(!a[i])
           break;
-        }
-        else if(uset[member.user.id][message.guild.id].points>uset[a[i]][message.guild.id].points)
-        {
-          for(var j=10;j<i;j--)
-          {
-            a[j]=a[j-1];
-          }
-          a[i]=member.user.id;
-          break;
-        }
+        let user = client.users.cache.get(a[i]);
+        var lb="";
+        lb=i+1 +". "+ user.username +" : "+uset[a[i]][message.guild.id].points + " points\n";
+        lb1=lb1+lb;
       }
-    });
-    var lb1="";
-    for(var i=0;i<10;i++)
-    {
-      if(!a[i])
-        break;
-      let user = client.users.get(a[i]);
-      var lb="";
-      lb=i+1 +". "+ user.username +" : "+uset[a[i]][message.guild.id].points + "points\n";
-      lb1=lb1+lb;
-    }
-    message.channel.send(lb1);
+      msg.edit(lb1);
+      //msg.delete();
+      //message.channel.send(lb1);
+    })
   }
+  
+  if(message.content.startsWith(config.prefix + "checklb"))
+  {
+    message.delete({timeout:1000});
+    const list = client.guilds.cache.get(message.guild.id);
+    var a = [];
+    var i=1;
+    var msgg="";
+    list.members.cache.forEach(member => {
+      msgg=i+". "+member.user.username;
+      i++;
+    });
+    message.channel.send(msgg);
+  }  
 //----------------------------server commands------------------------------------------------------
   if(message.content.startsWith(config.prefix + "server"))
   {
@@ -172,12 +201,6 @@ module.exports =(message, client) => {
     }
   }
 //----------------------------test commands--------------------------------------------------------
-  if(message.content.startsWith(config.prefix + "check"))
-  {
-    message.channel.send("@" + message.author.tag);
-    //message.channel.send("<@"+message.author.id+">");
-  }
-  
   if(message.content.startsWith(config.prefix + "botyt"))
   {
     client.user.setActivity('YouTube', { type: 'WATCHING' })
@@ -185,26 +208,33 @@ module.exports =(message, client) => {
   
   if(message.content.startsWith(config.prefix + "yt"))
   {
+    const youtube=require('./modules/youtube.js');
     
-    //console.log(youtube.subCount(args[0]));
+    console.log(youtube.subCount(args[0]));
   };
   
   if(message.content.startsWith(config.prefix + "test"))
   {
-    https.get('https://www.googleapis.com/youtube/v3/channels?part=statistics&id=UC51OKFGqiMGco1QjZQI6gOg&key='+ process.env.YTKEY+'', (resp) => {
+    var b = https.get('https://www.googleapis.com/youtube/v3/channels?part=statistics&id=UC51OKFGqiMGco1QjZQI6gOg&key='+ process.env.YTKEY+'', (resp) => {
   // A chunk of data has been recieved.
-      resp.on('data', (chunk) => {
+      var a=resp.on('data', (chunk) => {
         chunk = JSON.parse(chunk);
-        console.log(chunk.items[0].statistics.subscriberCount);
+          return(chunk.items[0].statistics.subscriberCount);
       });
     });
-  };
+    console.log(b);
+    
+    /*var b=https.get('https://www.googleapis.com/youtube/v3/channels?part=statistics&id=' + id + '&key=' + process.env.YTKEY, (resp) =>      {
+      // A chunk of data has been recieved.
+      var a=resp.on('data', (chunk) => {
+        chunk = JSON.parse(chunk);
+         return(chunk.items[0].statistics.subscriberCount);
+      });
+      return a;
+     });
+  return b;*/
+  }  
 
-  if(message.content.startsWith(config.prefix + "carrymeme"))
-  {
-    insta(message,client);
-  };
-  
 };
 
 

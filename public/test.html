@@ -1,0 +1,11 @@
+<html>
+	<head></head>
+	<body>
+		<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+		<script>
+			console.log("sd")
+			Cookies.set('name', 'value', { expires: 7/24/60/30, httpOnly:true})
+      console.log(Cookies.get('name',{httpOnly:true}))
+		</script>
+	</body>
+</html>

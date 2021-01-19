@@ -1,5 +1,11 @@
 {
-  "starts":{"help me":"type !helpme"},
-  "contains":{"lol":"lel"},
-  "exact":{"hello":"Hello!!"}
+  "starts": [
+    { "help me": "Type !helpme" }
+  ],
+  "contains": { "lol": "lel" },
+  "exact": {
+    "hello": "Hello!!",
+    "help me":"type !helpme",
+    "?": "You can type !helpme"
+  }
 }

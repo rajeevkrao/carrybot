@@ -1,33 +1,132 @@
 <html>
-<body>
-    <link rel="stylesheet" href="/style.css">
-    <input type="text" id="userInput" give me input >
-    <button id="submitter">Submit</button>
-    <div id="output"></div>
-    <script>
-        var didClickIt = false;
-        document.getElementById("submitter").addEventListener("click",function(){
-            // same as onclick, keeps the JS and HTML separate
-            didClickIt = true;
-        });
-
-        setInterval(function(){
-            // this is the closest you get to an infinite loop in JavaScript
-            if( didClickIt ) {
-                didClickIt = false;
-        // document.write causes silly problems, do this instead (or better yet, use a library like jQuery to do this stuff for you)
-                var o=document.getElementById("output"),v=document.getElementById("userInput").value;
-                const exjson = require("../config.json");
-                
-                if(o.textContent!==undefined){
-                    o.textContent=v;
-                }
-                else{
-                    o.innerText="sdfd";
-                }
-                console.log(v);
-            }
-        },500);
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script data-ad-client="ca-pub-9896213837637484" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous">
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="application/javascript" src="/static-notifier.js"></script>
+    <link rel="stylesheet" href="/style.css">
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 1em Helvetica, Arial; }
+      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+      #messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages li { padding: 5px 10px; }
+      #messages li:nth-child(odd) { background: #ddd; }
+      .modal {
+        display: block; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,1); /* Black w/ opacity */
+      }
+
+      /* Modal Content */
+      .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+      }
+
+      .modal-content input{
+        width:90%
+      }
+    </style>
+  </head>
+<body>
+  <div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+      <input type="text" id="myInput" placeholder="Enter Your Name"/>
+      <br/>
+      <br/>
+      <button id="myBtn">Submit</button>
+    </div>
+
+  </div>
+  <ul id="messages"></ul>
+    <form id="aform" action="">
+      <input id="m" autocomplete="off" /><button>Send</button>
+    </form>
+  <script>
+    var modal = document.getElementById("myModal");
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("myBtn");
+
+    // Get the <span> element that closes the modal
+    if(localStorage.getItem("username"))
+      modal.style.display = "none";
+    // When the user clicks the button, open the modal 
+    btn.onclick = function() {
+      if(!($('#myInput').val()))
+        alert("Name cannot be empty");
+      else{
+        localStorage.setItem("username",($('#myInput').val()));
+        modal.style.display = "none";
+      }
+    }
+  </script>
+  <script async>
+    var aheight=document.getElementById('aform').clientHeight;
+    document.getElementById('messages').style.paddingBottom=aheight+"px";
+    var msgCount=0;
+    axios.post("/api/discord/fetchmessages",{
+      "channelId":"699152794287865866",
+      "lastMsgId":"0"
+    }).then( (res) => {
+      res.data.messages.forEach(function(item,index){
+        var message=JSON.parse(item.content);
+        $('#messages').prepend($('<li>')
+          .append($('<div>').append($('<h4>').text(message.username+":")).append($('<p>').text(message.message))));
+        window.scrollTo(0,document.getElementsByTagName('html')[0].clientHeight)
+      })
+    }).catch(function(error){
+      console.log(error);
+    })
+  </script>
+  <script>
+  $(function () {
+    var socket = io('/tchats');
+    $('form').submit(function(e){
+      e.preventDefault(); // prevents page reloading
+      var obj={"username":localStorage.getItem("username"),"message":$('#m').val()}
+      socket.emit('message', obj);
+      $('#m').val('');
+      return false;
+    });
+    var tchat=io('/tchats');
+    tchat.on('smsg',function(socket){
+      socket=JSON.parse(socket)
+        $('#messages')
+        .append($('<li>')
+          .append($('<div>')
+            .append($('<h4>')
+              .text(socket.username+":"))
+            .append($('<p>').
+              text(socket.message)
+            )
+          )
+        );
+      window.scrollTo(0,document.getElementsByTagName('html')[0].clientHeight)
+    })
+  });
+</script>
 </body>
 </html>

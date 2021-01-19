@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>SVG Illustrator Test</title> 
+    </head>
+    <body>
+
+        <object data="https://carrybot.glitch.me/alpha.svg" type="image/svg+xml"
+         id="alphasvg"></object>
+
+        <script>
+            var a = document.getElementById("alphasvg");
+
+            // It's important to add an load event listener to the object,
+            // as it will load the svg doc asynchronously
+            a.addEventListener("load",function(){
+
+                // get the inner DOM of alpha.svg
+                var svgDoc = a.contentDocument;
+                console.log(document.getElementById("alphasvg").contentDocument)
+                // get the inner element by id
+                var delta = svgDoc.getElementById("rectang");
+                // add behaviour
+                delta.addEventListener("mousedown",function(){
+                        alert('hello world!')
+                }, false);
+            }, false);
+        </script>
+    </body>
+</html>

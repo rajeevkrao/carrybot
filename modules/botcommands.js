@@ -6,7 +6,7 @@ const client = new Discord.Client();
 
 const config = require("../config.json");
 
-var gsetfile = "../guildcheck.json";
+var gsetfile = "../guilds.json";
 const gset = require(gsetfile);
 
 module.exports = (message, client) => {
@@ -31,24 +31,9 @@ module.exports = (message, client) => {
         var gid=guild.id;
         if(!gset[guild.id])
           gset[guild.id]={};
-          fs.writeFile(gsetfile, JSON.stringify(gset), (err) => console.error);
+          fs.writeFileSync(gsetfile, JSON.stringify(gset), (err) => console.error);
           message.channel.send("Info of "+ guild.name +" has been updated");
       })
       
   }
-  /*
-  if(message.content.startsWith(config.prefix + "sms"))//SaveMyScore
-  {
-      if(!gset[message.guild.id])
-        gset[message.guild.id]={};
-      if(!gset[message.guild.id].users)
-        gset[message.guild.id].users={};
-      if(!gset[message.guild.id].users[message.author.id])
-        gset[message.guild.id].users[message.author.id]={};
-    
-      console.log(gset[message.guild.id].name);
-      
-      gset[message.guild.id].users[message.author.id].score = 10;
-      fs.writeFile(gsetfile, JSON.stringify(gset), (err) => console.error);    
-  }*/
 };

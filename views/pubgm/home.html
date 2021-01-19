@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <title>Carrybot! - PUBGM Rooms</title>
+    <meta name="description" content="A cool thing made with Glitch">
+    <link id="favicon" rel="icon" href="https://cdn.glitch.com/172511f7-a318-4755-8ed9-b24b68d81179%2Fcarrminati%20alpha%20channel..png?1535981328481" type="image/x-icon">
+    <meta charset="utf-8">
+    <script data-ad-client="ca-pub-9896213837637484" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+      #logo{
+        height:5vh;
+      }
+      body{
+        background-color:#eee;
+      }
+    </style>
+</head>
+  
+<body class = "container">
+  <div id="App"></div>
+  <div id="App2"></div>
+  <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <script type="text/babel">
+  class App extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = { liked: false };
+    }
+
+    componentDidMount(){
+      console.log(document.getElementById("nav").clientHeight)
+      document.getElementById("body").style.paddingTop=document.getElementById("nav").clientHeight+"px";
+    }
+
+    render() {
+      return (<div>
+          <div id="nav" style={{"position":"fixed"}}>
+            <img
+              id="logo"
+              src="https://cdn.glitch.com/172511f7-a318-4755-8ed9-b24b68d81179%2Fcarrminati%20alpha%20channel..png?1535981328481"
+            />
+          </div>
+          <div id="body">
+            <h1>Welcome to Carrybot-OTAKU PUBGM Rooms</h1>
+          </div>
+      </div>)
+    }
+  }
+
+  const domContainer = document.querySelector('#App');
+  ReactDOM.render(<App/>, domContainer);
+  
+  class App2 extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = { liked: false };
+    }
+
+    componentDidMount(){
+      console.log(document.getElementById("nav").clientHeight)
+      document.getElementById("body").style.paddingTop=document.getElementById("nav").clientHeight+"px";
+    }
+
+    render() {
+      return (<div>
+          Rajeev
+      </div>)
+    }
+  }
+
+  const domContainer2 = document.querySelector('#App2');
+  ReactDOM.render(<App2/>, domContainer2);
+  </script>
+</body>
+</html>

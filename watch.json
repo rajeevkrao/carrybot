@@ -1,11 +1,10 @@
-{
+a{
   "install": {
     "include": [
       "^package\\.json$",
       "^\\.env$"
     ]
   },
-  
   "restart": {
     "exclude": [
       "^public/",
@@ -15,7 +14,6 @@
       "\\.js$",
       "\\.json"
     ]
-  },
-  
+  },  
   "throttle": 900000
 }

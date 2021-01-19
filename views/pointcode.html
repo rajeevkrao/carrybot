@@ -2,13 +2,27 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Carrybot!</title>
-    <meta name="description" content="bot dedicated for Carrybhai">
+    <title>Carrybot! Get the Point</title>
+    <meta name="description" content="Get the code by clicking above link">
     <link id="favicon" rel="icon" href="https://cdn.glitch.com/172511f7-a318-4755-8ed9-b24b68d81179%2Fcarrminati%20alpha%20channel..png?1535981328481" type="image/x-icon">
     <meta charset="utf-8">
+    <script data-ad-client="ca-pub-9896213837637484" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-141516148-1"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous">
+    </script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-141516148-1');
+    </script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <script>
      (adsbygoogle = window.adsbygoogle || []).push({
@@ -22,15 +36,16 @@
   </head>
 
   <body>
-    <p id="demo"></p>
-
+    <div style="text-align:center;font-size:4em;">  
+      <div id="test"></div>
+    </div>
     <script>
-      var car=111;
-    document.getElementById("demo").innerHTML = car;
-      console.log(point.code);
-    </script> 
+      axios.get("https://carrybot.glitch.me/pointreq")
+      .then(function(res){
+        $('#test').text(res.data.code)
+      })
+    </script>
 
-    
   </body>
   
 </html>
