@@ -37,7 +37,7 @@
     "iplocation": "^6.1.0",
     "ipware": "^2.0.0",
     "jquery": "^3.4.1",
-    "json": "^9.0.6",
+    "json": "^10.0.0",
     "jsonfile": "^6.0.1",
     "jsx-loader": "^0.13.2",
     "mega": "^0.2.0",
