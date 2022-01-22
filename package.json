@@ -42,7 +42,7 @@
     "jsx-loader": "^0.13.2",
     "mega": "^0.2.0",
     "mongodb": "^3.5.5",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^3.1.1",
     "parcel": "^1.12.4",
     "query-string": "^6.11.1",
     "r-json": "^1.2.9",
