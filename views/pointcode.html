@@ -8,6 +8,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<style>
+			
+		</style>
     
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <script>
@@ -22,12 +26,14 @@
   </head>
 
   <body>
-    <p id="demo"></p>
+    <h1 id="demo"></h1>
 
     <script>
-      var car=111;
-    document.getElementById("demo").innerHTML = car;
-      console.log(point.code);
+			fetch('/pointreq')
+			.then(res=>res.json())
+			.then(data=>{
+				    	document.getElementById("demo").innerHTML = data.code;
+			})
     </script> 
 
     

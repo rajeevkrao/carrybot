@@ -1,0 +1,36 @@
+<html>
+	<head>
+		<title>Registered Teams for the tournament</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">mous">
+	</head>
+	<body>
+		
+		<script>
+			document.write("")
+			fetch('/reg.json')
+  		.then(response => response.json())
+  		.then(data => {
+				document.write("<div class=\"containter\"><div class=\"row\">")
+				var k = 1;
+				for(i=0;i<data.length;i++){
+					if(data[i].pool=="POOL-B"){
+						document.write("<div class=\"col-md-3 col-sm-4 col-xs-6\">")
+					document.write(`<h1>Slot No ${k} - ${data[i].teamName}</h1>`);
+					k=k+1;
+					document.write(`<h2>${data[i].pool} Time - 8pm and 10pm Room Matches</h2>`);
+					for(j=0;j<data[i].members.length;j++)
+						document.write(`<h4>${data[i].members[j]}</h4>`);
+					document.write('</div>')
+					}
+				}
+				
+			})
+			.then(()=>{
+				document.write("</div></div>")
+			})
+		
+		</script>
+		</div></div>
+	</body>
+</html>

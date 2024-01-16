@@ -23,15 +23,14 @@ module.exports = (message, client, args) => {
     fs.writeFile(usrdb, JSON.stringify(usr), (err) => console.error);
   }
   
-  if(message.content.startsWith(config.prefix + "points"))
+/*   if(message.content.startsWith(config.prefix + "points")) // LEGACY POINTS SYSTEM
   {
-    if(!usr[message.author.id][message.guild.id].points)
+     if(!usr[message.author.id][message.guild.id].points)
     {    
       usr[message.author.id][message.guild.id].points = 0;
       fs.writeFile(usrdb, JSON.stringify(usr), (err) => console.error);
-    }
-      message.channel.send("You have scored " + usr[message.author.id][message.guild.id].points + " points");
-  }  
+    } 
+  }   */
   
   if(message.content.startsWith(config.prefix + "pc"))
   {

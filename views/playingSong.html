@@ -1,0 +1,27 @@
+<html>
+	<head>
+		<style>
+			marquee{
+				font-size:1.3em;
+				font-weight:800;
+				-webkit-text-stroke: 1px black;
+				-webkit-text-fill-color: white;
+			}
+		</style>
+	</head>	
+<body>
+    <link rel="stylesheet" href="/style.css">
+    <marquee><span>Current Song Playing - </span><span id="songname"></songname></marquee>
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="/socket.io/socket.io.js"></script>
+		<script>
+			$.get( "/api/moc/getname", function( data ) {
+				$( "#songname" ).html( data );
+			});
+			var socket = io('/moc');
+			socket.on("songname",(socket)=>{
+				$( "#songname" ).html( socket );
+			})
+		</script>
+</body>
+</html>

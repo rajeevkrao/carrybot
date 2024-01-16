@@ -20,6 +20,17 @@
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script data-ad-client="ca-pub-9896213837637484" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-141516148-1"></script>
+    
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-141516148-1');
+    </script>
 
     <title>Carrybot</title>
   </head>
@@ -46,6 +57,15 @@
           </li>
           <li class="nav-item nav-custom-link">
             <a class="nav-link" href="https://discord.gg/skdAzYn">Discord Server<i class="icon ion-ios-arrow-forward icon-mobile"></i></a>
+          </li>
+          <li class="nav-item nav-custom-link" id="logout">
+            <a class="nav-link" href="/logout">Logout<i class="icon ion-ios-arrow-forward icon-mobile"></i></a>
+          </li>
+          <!--<li class="nav-item nav-custom-link" id="facebook">
+            
+          </li>-->
+          <li class="nav-item nav-custom-link" id="discord">
+            <a class="nav-link" href="https://discord.com/api/oauth2/authorize?client_id=394043043931619328&redirect_uri=https%3A%2F%2Fcarrybot.rkrao.repl.co%2Flogincode&response_type=code&scope=identify%20email"><div class="discordButton">Login through Discord</div></a>
           </li>
         </ul>
       </div>
@@ -91,6 +111,7 @@
     </div>
   </section>
   E N D  M A R K E T I N G -->
+    
 
   <!-- T E S T I M O N I A L S -->
   <section id="testimonials">
@@ -141,8 +162,7 @@ $("#youtube_video1").attr("src","https://youtube.com/embed/"+id + "?controls=0&s
   </section>
   <!-- E N D  T E S T I M O N I A L S -->
 
-  <!-- P R I C I N G
-  <section id="pricing">
+  <!-- P R I C I N G d <section id="pricing">
     <div class="container">
       <div class="title-block">
         <h2>Plans and Pricing</h2>
@@ -220,6 +240,8 @@ $("#youtube_video1").attr("src","https://youtube.com/embed/"+id + "?controls=0&s
         <p>If you are a carryminati fan why not join our fan club.</p>
         <a href="https://discord.gg/skdAzYn" class="btn btn-regular">Join now!!</a>
       </div>
+      
+      <div id="FB"></div>
     </div>
   </section>
   <!-- E N D  C A L L  T O  A C T I O N -->
@@ -228,23 +250,15 @@ $("#youtube_video1").attr("src","https://youtube.com/embed/"+id + "?controls=0&s
   <footer>
     <div class="container">
       <div class="row">
-        <div class="col-md-3">
-          <h5>Blog</h5>
-          
-          <!--
-          <ul>
-            <li><a href="#">Get High Quality Backlinks</a></li>
-            <li><a href="#">Top Google Searches</a></li>
-            <li><a href="#">Avoid Google Penalties</a></li>
-            <li><a href="#">White Hat SEO Tips</a></li>
-            <li><a href="#">Google Trends</a></li>
-          </ul>
-          -->
+        <div class="col-md-6">
+          <h5><a href="https://carrybot.blogspot.com/" style="color:#aeb3bd !important;">Blog</a></h5>
+              <div id="App">
+              </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-6">
           <h5>About</h5>
-          <p>This page is creaed in favour of carryminati and his fans.</p>
-          <p>Contact-<a href="yt.ratech@gmail.com" class="external-links">yt.ratech@gmail.com</a></p>
+          <p>This page is created in favour of carryminati and his fans.</p>
+          <p>Contact-<a href="workforrajeev@gmail.com" class="external-links">workforrajeev@gmail.com</a></p>
         </div>
       </div> 
       <div class="divider"></div>
@@ -253,21 +267,35 @@ $("#youtube_video1").attr("src","https://youtube.com/embed/"+id + "?controls=0&s
             <a href="https://www.facebook.com/raokrajeev"><i class="icon ion-logo-facebook"></i></a>
             <a href="https://www.instagram.com/carrybot"><i class="icon ion-logo-instagram"></i></a>
             <a href="https://www.twitter.com/rajeevraok"><i class="icon ion-logo-twitter"></i></a>
-            <a href="https://www.youtube.com/arrebhai"><i class="icon ion-logo-youtube"></i></a>
+            <a href="https://www.youtube.com/channel/UC51OKFGqiMGco1QjZQI6gOg"><i class="icon ion-logo-youtube"></i></a>
           </div>
           <div class="col-md-6 col-xs-12">
-            <small>2019 &copy; All rights reserved. Made by <a href="http://about.me/rajeevkrao" target="blank" class="external-links">Rajeev K Rao</a></small>
+            <small><script>document.write(new Date().getFullYear());</script> &copy; All rights reserved. Made by <a href="http://about.me/rajeevkrao" target="blank" class="external-links">Rajeev K Rao</a></small>
           </div>
       </div>
     </div>
   </footer>
   <!--  E N D  F O O T E R  -->
-    
-
     <!-- External JavaScripts -->
+    <script type="text/javascript" src="/reactjs/bundle.js"></script>
+    <script>
+      if("sid" in localStorage){
+        document.getElementById("discord").style.display="none";
+        document.getElementById("logout").style.display="block";
+      }
+      else{
+        document.getElementById("discord").style.display="block";
+        document.getElementById("logout").style.display="none";
+      }
+    </script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+    <!--<script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-facebook-login@4.1.1/dist/facebook-login-with-button.min.js"></script>
+    -->
   </body>
 </html>

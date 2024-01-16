@@ -4,30 +4,12 @@
     <input type="text" id="userInput" give me input >
     <button id="submitter">Submit</button>
     <div id="output"></div>
-    <script>
-        var didClickIt = false;
-        document.getElementById("submitter").addEventListener("click",function(){
-            // same as onclick, keeps the JS and HTML separate
-            didClickIt = true;
-        });
-
-        setInterval(function(){
-            // this is the closest you get to an infinite loop in JavaScript
-            if( didClickIt ) {
-                didClickIt = false;
-        // document.write causes silly problems, do this instead (or better yet, use a library like jQuery to do this stuff for you)
-                var o=document.getElementById("output"),v=document.getElementById("userInput").value;
-                const exjson = require("../config.json");
-                
-                if(o.textContent!==undefined){
-                    o.textContent=v;
-                }
-                else{
-                    o.innerText="sdfd";
-                }
-                console.log(v);
-            }
-        },500);
-    </script>
+    <script src="/socket.io/socket.io.js"></script>
+		<script>
+			var socket = io('/moc');
+			socket.on("songname",(socket)=>{
+				console.log(socket)
+			})
+		</script>
 </body>
 </html>

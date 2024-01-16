@@ -1,4 +1,5 @@
-                      Welcome to the Carrybot
+
+Welcome to the Carrybot
 =========================
 This is a small bot dedicated to Carryminati.
 

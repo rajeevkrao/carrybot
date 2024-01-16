@@ -1,0 +1,19 @@
+<html>
+	<head>
+		<title>Team Slots for 9pm Room Match</title>
+	</head>
+	<body>
+		<script>
+			fetch('/teams.json')
+  		.then(response => response.json())
+  		.then(data => {
+				for(obj in data){
+					//console.log(obj);
+					if(data[obj]==0)
+						data[obj]="For Other Solos, Duos or Trios"
+					document.write(`Slot ${obj} - `+data[obj]+'<br/>');
+				}
+			});
+		</script>
+	</body>
+</html>

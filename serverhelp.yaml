@@ -1,0 +1,14 @@
+---
+commands: 
+  - register: 
+      command: | 
+       !server register
+      description: |
+       To register this server in our database
+  - unregister: 
+      command: |
+       !server unregister
+      description: |
+       To remove your server from our database
+heading: |
+ List of all server commmands

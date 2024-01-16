@@ -1,16 +1,20 @@
-const fs = require("fs");
+ const fs = require("fs");
 
 const https = require('https');
 
 //const youtube = require("./modules/youtube.js");
 
-const { RichEmbed } = require('discord.js');
+const { MessageEmbed } = require('discord.js');
+
+const Mongo = require("./modules/mongodb.js");
+
+var mongo = new Mongo();
 
 const config = require("./config.json");
 const dscmds = require("./DSCMDS.js");
 
 const gdbfix = require("./gdbfix.js");
-const usrcmds = require("./users.js");
+//const usrcmds = require("./users.js");
 const guildscmds = require("./modules/botcommands.js");
 const msglog = require("./modules/msglogger.js");
 
@@ -21,10 +25,13 @@ var gsetfile = "./guilds.json";
 const gset = require(gsetfile);
 const gsetsync = fs.readFileSync(gsetfile);
 
-var usetfile = "./users.json";
-const uset = require(usetfile);
+const rj = require('r-json');
+const wj = require('w-json');
 
-const insta = require("./instagram.js");
+/*var usetfile = "./users.json";
+const uset = rj(__dirname+"/users.json");//require(usetfile);*/
+
+//const insta = require("./instagram.js");
 
 module.exports =(message, client) => {
   
@@ -32,7 +39,7 @@ module.exports =(message, client) => {
   const args = message.content.slice(config.prefix.length).split(' ');
   const command = args.shift().toLowerCase();
   
-  usrcmds(message, client, args);
+  //usrcmds(message, client, args);
   guildscmds(message, client);
   msglog(message, client);
 
@@ -40,17 +47,17 @@ module.exports =(message, client) => {
   
   if(message.content.startsWith(config.prefix + "helpme"))
   {
-    message.delete(1000);
+    message.delete({timeout:1000});
     fs.readFile('help.txt', 'utf8',(err, data) => {
     if (err) throw err;
-    var embed = new RichEmbed().setTitle("Commands for Carrybot").setColor(0x00FF00).setDescription(data);
+    var embed = new MessageEmbed().setTitle("Commands for Carrybot").setColor(0x00FF00).setDescription(data);
     message.author.send(embed);
     });
   }
   
   if(message.content.startsWith(config.prefix + "myid"))
   {
-    message.delete(1000);
+    message.delete({timeout:1000});
     var tag = "<@" + message.author.id + ">";
     message.author.send(tag +" your Discord ID is : " + message.author.id);
   }
@@ -64,17 +71,29 @@ module.exports =(message, client) => {
   {
       let string = '';
       var i=1;
-      client.guilds.forEach(guild=>{
+      client.guilds.cache.forEach(guild=>{
       string+= i + '. ' + guild.name + '\n';
       i++;
       })
-      var embed = new RichEmbed().setTitle("Servers which **" + client.user.username + "** has joined").setColor(0x0000FF).setDescription(string);
+      var embed = new MessageEmbed().setTitle("Servers which **" + client.user.username + "** has joined").setColor(0x0000FF).setDescription(string);
+      message.channel.send(embed);
+  };
+
+  if(message.content.startsWith(config.prefix + "botserversinv"))
+  {
+      let string = '';
+      var i=1;
+      client.guilds.cache.forEach(guild=>{
+      string+= i + '. ' + guild.name + '\n';
+      i++;
+      })
+      var embed = new MessageEmbed().setTitle("Servers which **" + client.user.username + "** has joined").setColor(0x0000FF).setDescription(string);
       message.channel.send(embed);
   };
   
   if(message.content.startsWith(config.prefix + "jd"))
   {
-    message.delete(1000);
+    message.delete({"timeout":1000});
     message.author.send("You joined **" + message.guild.name + "** at " + message.member.joinedAt); 
   };
   
@@ -86,76 +105,145 @@ module.exports =(message, client) => {
     return users[0].name;
     */
     async function getFirstUser() {
-    var bar = client.fetchUser("366565330719473667").then(user => {
-      return user.username;
-        })
-    return bar;
+		client.fetchUser("366565330719473667").then(user => {
+      console.log(user.username)
+    }) 
+    
     }  
     console.log(getFirstUser());
   }    
-  
-  if(message.content.startsWith(config.prefix + "leaderboard"))
+
+/* 	if(message.content.startsWith(config.prefix + "lbtest"))
+	{
+		message.delete({timeout:1000});
+    const list = client.guilds.cache.get(message.guild.id);
+		//console.log(list.name)
+		list.members.cache.forEach(member => {
+			console.log(member.user)
+		});
+	} */
+
+  if(message.content.startsWith(config.prefix + "checklb"))
   {
-    
-    const list = client.guilds.get(message.guild.id);
+    message.delete({timeout:1000});
+    const list = client.guilds.cache.get(message.guild.id);
     var a = [];
-    list.members.forEach(member => {
-      if(!uset[member.user.id])
-        uset[member.user.id]={}
-      if(!uset[member.user.id][message.guild.id])
-        uset[member.user.id][message.guild.id]={}
-      if(!uset[member.user.id][message.guild.id].points)
-        uset[member.user.id][message.guild.id].points=0;
-      fs.writeFile(usetfile, JSON.stringify(uset), (err) => console.error);
+    var i=1;
+    var msgg="";
+    list.members.cache.forEach(member => {
+			console.log(member.user.username);
+      msgg=i+". "+member.user.username;
+      i++;
+    });
+    message.channel.send(msgg);
+  } 
+
+	if(message.content.startsWith(config.prefix + "points"))
+  {
+		var points;
+		mongo.getUser(message.author.id,message.guild.id).then(doc=>{
+			if(!doc)
+				points=0;
+			else if(!doc.points)
+				points=0;
+			else
+				points = doc.points
+			message.channel.send("You have scored " + points + " points");
+		}).catch(err=>{
+			if(err.code==404)
+				message.channel.send("You have scored 0 points");
+		})
+  } 
+
+	if(message.content.startsWith(config.prefix + "leaderboard") || message.content.startsWith(config.prefix + "lb")){
+		message.channel.send("Calculating Total Members...").then(msg=>{
+			var a = '';
+			mongo.getGuildLBoard(message.guild.id).then(async docs=>{
+				for(i in docs){
+					var user = await client.users.fetch(docs[i].UID)
+					if(user)
+						a+=`${Number(i)+1}.${user.username} :${docs[i].points} points\n`
+				}
+				msg.edit(a);
+			})
+		})
+	}
+  
+  /* if(message.content.startsWith(config.prefix + "leaderboard") || message.content.startsWith(config.prefix + "lb"))
+  {
+    var msg2=message.channel.send("Calculating Total members...").then(msg => {
+      const list = client.guilds.cache.get(message.guild.id);
+      var a = [];
+      list.members.cache.forEach(member => {
+				if(member.user.bot)
+					return;
+        if(!uset[member.user.id])
+          uset[member.user.id]={}
+        if(!uset[member.user.id][message.guild.id])
+          uset[member.user.id][message.guild.id]={}
+        if(!uset[member.user.id][message.guild.id].points)
+          uset[member.user.id][message.guild.id].points=0;
+        fs.writeFileSync(usetfile, JSON.stringify(uset), (err) => console.error);
+        for(var i=0;i<10;i++)
+        {
+          var user=a[i];
+          if(a[i]==null)
+          {
+            a[i]=member.user.id;
+            break;
+          }
+          else if(uset[member.user.id][message.guild.id].points>uset[a[i]][message.guild.id].points)
+          {
+            for(var j=10;j>i;j--)
+            {
+              a[j]=a[j-1];
+            }
+            a[i]=member.user.id;
+            break;
+          }
+        }
+      });
+      var lb1="";
       for(var i=0;i<10;i++)
       {
-        var user=a[i];
-        if(a[i]==null)
-        {
-          a[i]=member.user.id;
+        if(!a[i])
           break;
-        }
-        else if(uset[member.user.id][message.guild.id].points>uset[a[i]][message.guild.id].points)
-        {
-          for(var j=10;j<i;j--)
-          {
-            a[j]=a[j-1];
-          }
-          a[i]=member.user.id;
-          break;
-        }
+        let user = client.users.cache.get(a[i]);
+        var lb="";
+        lb=i+1 +". "+ user.username +" : "+uset[a[i]][message.guild.id].points + " points\n";
+        lb1=lb1+lb;
       }
-    });
-    var lb1="";
-    for(var i=0;i<10;i++)
-    {
-      if(!a[i])
-        break;
-      let user = client.users.get(a[i]);
-      var lb="";
-      lb=i+1 +". "+ user.username +" : "+uset[a[i]][message.guild.id].points + "points\n";
-      lb1=lb1+lb;
-    }
-    message.channel.send(lb1);
-  }
+      msg.edit(lb1);
+      //msg.delete();
+      //message.channel.send(lb1);
+    })
+  } */
+
+//------------------minecraft server commands----------
+	if(message.content.startsWith(config.prefix + "mc add")){
+		if(message.member && (!message.member.hasPermission("MANAGE_GUILD")))
+      return message.channel.send("You must be the owner or server manager of this server to use this command");
+		var mclist = rj(__dirname+"/mclist.json");
+		//mclist.
+	}
 //----------------------------server commands------------------------------------------------------
   if(message.content.startsWith(config.prefix + "server"))
   {
-    if(!message.member.hasPermission("MANAGE_GUILD"))
+    if(message.member && (!message.member.hasPermission("MANAGE_GUILD")))
       return message.channel.send("You must be the owner or server manager of this server to use this command");
     dscmds(message, client, args); 
   };
  
-//----------------------------normal memeber command limiter---------------------------------------
-//----------------------------admin level commands-------------------------------------------------
-  const ownerarr = config.owner;
+//---------------------admin level commands--------------------------
+	const ownerarr = config.owner;
   var oa=0;  
   ownerarr.forEach(function(element) {
 
     if(message.author.id == element)
       oa=1; 
   });
-  if((message.member.hasPermission("MANAGE_GUILD")) || (oa))
+  
+  if((message.member && (message.member.hasPermission("MANAGE_GUILD"))) || (oa))
   {
     if(message.content.startsWith(config.prefix + "bd"))
     {
@@ -164,7 +252,7 @@ module.exports =(message, client) => {
     }
     if(message.content.startsWith(config.prefix + "working"))
     {
-      console.log("Working");
+      console.log("Workings");
     }
     if(message.content.startsWith(config.prefix + "gdbfix"))
     {
@@ -189,8 +277,9 @@ module.exports =(message, client) => {
     //console.log(youtube.subCount(args[0]));
   };
   
-  if(message.content.startsWith(config.prefix + "test"))
+  /* if(message.content.startsWith(config.prefix + "test"))
   {
+		try{
     https.get('https://www.googleapis.com/youtube/v3/channels?part=statistics&id=UC51OKFGqiMGco1QjZQI6gOg&key='+ process.env.YTKEY+'', (resp) => {
   // A chunk of data has been recieved.
       resp.on('data', (chunk) => {
@@ -198,7 +287,11 @@ module.exports =(message, client) => {
         console.log(chunk.items[0].statistics.subscriberCount);
       });
     });
-  };
+		}
+		catch(err){
+			console.log(err)
+		}
+  }; */
 
   if(message.content.startsWith(config.prefix + "carrymeme"))
   {
@@ -206,6 +299,3 @@ module.exports =(message, client) => {
   };
   
 };
-
-
-  

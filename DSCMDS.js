@@ -40,7 +40,7 @@ module.exports = (message, client, args) => {
   
   if(message.content === config.prefix + 'server')
   {
-    message.delete(1000);
+    message.delete({timeout:1000});
     fs.readFile('serverhelp.txt', 'utf8',(err, data) => 
     {
       if (err) throw err;

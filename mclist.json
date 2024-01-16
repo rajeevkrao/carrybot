@@ -1,0 +1,17 @@
+{
+  "channels": {},
+  "prefix": "0.tcp.in.ngrok.io:",
+  "port": "12345",
+	"java-ip":"rural-cherries.auto.playit.gg",
+	"bedrock-ip":"long-sofa.auto.playit.gg",
+	"bedrock-port":"46542",
+  "status": 1,
+  "version": "1.16.5",
+  "members": [
+    "366565330719473667",
+    "527767432182366208",
+    "707478375400472608",
+    "744153906828804146",
+    "793061359796486146"
+  ]
+}

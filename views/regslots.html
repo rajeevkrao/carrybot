@@ -1,0 +1,21 @@
+<html>
+	<head>
+		<title>Registered Teams for the tournament</title>
+	</head>
+	<body>
+		<script>
+			fetch('/reg.json')
+  		.then(response => response.json())
+  		.then(data => {
+				for(i=0;i<data.length;i++){
+					document.write(`<h1>No ${i+1} - ${data[i].teamName}</h1>`);
+					document.write(`<h2>${data[i].pool} | Time - ${data[i].time} | Current Points - ${data[i].tpoints}</h2>`);
+					for(j=0;j<data[i].members.length;j++)
+						document.write(`<h4>${data[i].members[j]}</h4>`);
+					document.write('<br/>')
+
+				}
+			});
+		</script>
+	</body>
+</html>

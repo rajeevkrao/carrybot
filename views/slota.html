@@ -1,0 +1,25 @@
+<html>
+	<head>
+		<title>Team Slots for POOL-A</title>
+	</head>
+	<body>
+		<script>
+			fetch('/reg.json')
+  		.then(response => response.json())
+  		.then(data => {
+				var k = 1;
+				for(i=0;i<data.length;i++){
+					if(data[i].pool=="POOL-A"){
+					document.write(`<h1>Slot No ${k} - ${data[i].teamName}</h1>`);
+					k=k+1;
+					console.log(k)
+					document.write(`<h2>${data[i].pool} Time - 7pm and 9pm Room Matches</h2>`);
+					for(j=0;j<data[i].members.length;j++)
+						document.write(`<h4>${data[i].members[j]}</h4>`);
+					document.write('<br/>')
+					}
+				}
+			});
+		</script>
+	</body>
+</html>
