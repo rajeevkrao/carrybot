@@ -1,4 +1,6 @@
 const Discord = require("discord.js");
+const asyncRedis = require("async-redis");
+const { differenceInSeconds } = require("date-fns");
 const client = new Discord.Client({
     disableEveryone: true,
     fetchAllMembers: true,
@@ -8,11 +10,71 @@ const client = new Discord.Client({
 
 require('dotenv').config()
 
+const redisClient = asyncRedis.createClient({url:process.env.REDIS_CONNECT_URI});
+
 const btoa = require('btoa')
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 var express = require('express');
 var app = express();
+
+const Sentry = require('@sentry/node')
+const Tracing = require('@sentry/tracing')
+
+const wakeTime = new Date();
+const redisUptimeName = 'carrybotUptime';
+
+(async()=>{
+	await redisClient.hset(redisUptimeName+":"+wakeTime.getTime(), 'wakeTime', wakeTime.toString())
+})();
+
+setInterval(async()=>{
+	await redisClient.hset(redisUptimeName+":"+wakeTime.getTime(), 'lastUpdateTime', (new Date()).toString())
+}, 1000);
+
+process.on("SIGINT",()=>{
+	console.log("int")
+	bot.telegram.sendMessage("872954435", 'App Closing🔴', {})
+})
+
+process.on("SIGTERM",()=>{
+	console.log("term")
+	bot.telegram.sendMessage("872954435", 'App Closing🔴', {})
+})
+
+process.on("SIGQUIT",()=>{
+	console.log("quit")
+	bot.telegram.sendMessage("872954435", 'App Closing🔴', {})
+})
+
+process.on("exit", (code) => {
+  console.log(`Process exited with code ${code}`);
+  bot.telegram.sendMessage("872954435", 'App Closing🔴', {});
+});
+
+Sentry.init({
+  dsn: "https://11c465fae53b4607a4a38545485c327f@o4504368595402752.ingest.sentry.io/4504368601497600",
+  integrations: [
+    // enable HTTP calls tracing
+    new Sentry.Integrations.Http({ tracing: true }),
+    // enable Express.js middleware tracing
+    new Tracing.Integrations.Express({ app }),
+  ],
+
+  // Set tracesSampleRate to 1.0 to capture 100%
+  // of transactions for performance monitoring.
+  // We recommend adjusting this value in production
+  tracesSampleRate: 1.0,
+});
+
+app.use(Sentry.Handlers.requestHandler());
+// TracingHandler creates a trace for every incoming request
+app.use(Sentry.Handlers.tracingHandler());
+
+// All controllers should live here
+/* app.get("/", function rootHandler(req, res) {
+  res.end("Hello world!");
+}); */
 
 const request = require('request')
 const body_parser = require('body-parser')
@@ -72,7 +134,7 @@ class DisFnExec{
 
 async function disMC(){
 	try{
-		await pinger.pingPromise('147.185.221.212', 29782)
+		await pinger.pingPromise('144.24.131.99', 25565)
 		client.channels.cache.get("866566743831609374").messages.fetch("869489221935722496")
 		.then(message=>{message.edit("Server is Online🟢")})
 		client.channels.cache.get("866566743831609374").setName("Minecraft Server🟢")
@@ -278,7 +340,20 @@ client.on("guildDelete", guild => {
 try{
 client.on("ready", () => {
   console.log("%c[SERVER]-->" + client.user.username + " is online in discord",'background:#0f0;color:#fff');
-	bot.telegram.sendMessage("872954435", 'Discord bot is online now🟢', {}) //telegram user_id - 872954435 - rajeevkrao
+	(async()=>{
+		const keys = await redisClient.keys('carrybotUptime:*')
+		keys.sort();
+		const value = await redisClient.hgetall(keys[keys.length-1])
+		
+		const diffSecs = differenceInSeconds(new Date(value['lastUpdateTime']), wakeTime)
+		const minutes = Math.floor(diffSecs / 60);
+		const seconds = diffSecs % 60;
+		console.log(`Last Downtime - ${minutes} Minutes ${seconds} Seconds`)
+		bot.telegram.sendMessage("872954435", `Last Downtime - ${minutes} Minutes ${seconds} Seconds`, {})
+		
+	})();
+	bot.telegram.sendMessage("872954435", 'Discord bot is online now🟢', {})
+	//telegram user_id - 872954435 - rajeevkrao
   client.user.setActivity('!helpme', { type: 'LISTENING' })
   sercup(client);
 	(async()=>{await disMC();setInterval(disMC, 60000);})();
@@ -666,6 +741,19 @@ app.get('/api/moc/songname', function(req,res){
 	io.of('/moc').emit('songname', path.parse(req.query.name).name);
 	res.end();
 })
+
+// The error handler must be before any other error middleware and after all controllers
+app.use(Sentry.Handlers.errorHandler());
+
+// Optional fallthrough error handler
+app.use(function onError(err, req, res, next) {
+  // The error id is attached to `res.sentry` to be returned
+  // and optionally displayed to the user for support.
+  res.statusCode = 500;
+  res.end(res.sentry + "\n");
+});
+
+//---------------------socket-io-----------------------------
 
 io.on('connection', (socket) => {
   console.log('a user connected');

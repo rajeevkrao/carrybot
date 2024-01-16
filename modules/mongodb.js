@@ -9,7 +9,7 @@ class Mongo{
 			var uri = `mongodb+srv://${creds.user}:${creds.pass}@dbase.oj0xm.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
 		else
 			var uri = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@dbase.oj0xm.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
-		const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+		const  client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 		client.connect(err => {
 		  if(!err){
 		  	console.log("mongodb database connected");
