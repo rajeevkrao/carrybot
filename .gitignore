@@ -11,5 +11,6 @@ instagram.js
 public/images
 gmail.js
 users.json
+client_secret.json
 node_modules
 .env

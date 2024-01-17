@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const Discord = require("discord.js");
 const asyncRedis = require("async-redis");
 const { differenceInSeconds } = require("date-fns");
@@ -13,13 +15,13 @@ require('dotenv').config()
 const redisClient = asyncRedis.createClient({url:process.env.REDIS_CONNECT_URI});
 
 const btoa = require('btoa')
-const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 var express = require('express');
 var app = express();
 
 const Sentry = require('@sentry/node')
 const Tracing = require('@sentry/tracing')
+const https = require('https');
 
 const wakeTime = new Date();
 const redisUptimeName = 'carrybotUptime';
@@ -628,14 +630,7 @@ app.get('/logincode', function(request, response) {
   const creds = btoa(`${CLIENT_ID}:${CLIENT_SECRET}`);
   const redirect = "https://discordapp.com/oauth2/authorize?client_id=394043043931619328&redirect_uri=https%3A%2F%2Fcarrybot.glitch.me%2Flogincode&response_type=code&scope=identify%20email";
   (async() => {
-  const res = await fetch(`https://discordapp.com/api/oauth2/token?grant_type=authorization_code&code=${code}&redirect_uri=${redirect}`,
-    {
-      method: 'POST',
-      headers: {
-        Authorization: `Basic ${creds}`,
-      },
-    });
-  const json = await res.json();
+  const { data: json } = await axios.post(`https://discordapp.com/api/oauth2/token?grant_type=authorization_code&code=${code}&redirect_uri=${redirect}`, {}, { headers: { Authorization: `Basic ${creds}` } })
   axios.get(
       `https://discordapp.com/api/users/@me`,
       {headers: {Authorization: `Bearer ${json.access_token}`}}
